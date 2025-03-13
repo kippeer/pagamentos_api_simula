@@ -1,29 +1,28 @@
 package com.example.payment.dto;
 
-import com.example.payment.model.PaymentMethod;
+import com.example.payment.domain.enums.PaymentMethod;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
 import java.math.BigDecimal;
 import java.util.Map;
 
 @Data
 public class PaymentRequest {
     @NotNull(message = "Amount is required")
-    @Positive(message = "Amount must be positive")
-    @DecimalMin(value = "0.01", message = "Amount must be at least 0.01")
+    @DecimalMin(value = "0.01", message = "Amount must be greater than 0")
     private BigDecimal amount;
     
-    @NotNull(message = "Currency is required")
-    @Pattern(regexp = "^[A-Z]{3}$", message = "Currency must be a 3-letter ISO code")
+    @NotBlank(message = "Currency is required")
     private String currency;
     
     @NotNull(message = "Payment method is required")
     private PaymentMethod paymentMethod;
     
-    @NotNull(message = "Payment details are required")
     @Valid
+    @NotNull(message = "Payment details are required")
     private Map<String, Object> paymentDetails;
     
     @Valid

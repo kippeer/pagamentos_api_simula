@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: payment-system
   datasource:
     url: jdbc:postgresql://localhost:5432/payment
     username: ${DB_USERNAME:postgres}
@@ -13,24 +11,14 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     
-springdoc:
-  api-docs:
-    path: /api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    operations-sorter: method
-    tags-sorter: alpha
-    
+server:
+  port: 8080
+  
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,prometheus
-  endpoint:
-    health:
-      show-details: always
-      
-logging:
-  level:
-    com.example.payment: DEBUG
-    org.springframework: INFO
+        include: health,metrics,prometheus
+  metrics:
+    tags:
+      application: payment-api
